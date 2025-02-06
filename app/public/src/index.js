@@ -1,3 +1,1 @@
-window.app = new DropBoxControler();
-
-
+window.app = new DropBoxController()

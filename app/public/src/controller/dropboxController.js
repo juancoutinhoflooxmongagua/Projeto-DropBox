@@ -3,7 +3,7 @@ class DropBoxController {
       this.btnSendFileEl = document.querySelector("#btn-send-file");
       this.inputFilesEl = document.querySelector("#files");
       this.snackModalEl = document.querySelector("#react-snackbar-root");
-  
+      this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg');
       this.initEvents();
     }
   
@@ -13,9 +13,8 @@ class DropBoxController {
       });
   
       this.inputFilesEl.addEventListener("change", (event) => {
-        this.uploadTask(event.target.files)
-  
-        this.snackModalEl.style.display = 'block'
+        this.uploadTask(event.target.files);
+        this.snackModalEl.style.display = 'block';
       });
     }
   
@@ -26,31 +25,41 @@ class DropBoxController {
         promises.push(new Promise((resolve, reject) => {
           let ajax = new XMLHttpRequest();
   
-          ajax.open('POST', '/upload')
+          ajax.open('POST', '/upload');
   
           ajax.onload = event => {
             try {
-              resolve(JSON.parse(ajax.responseText))
+              resolve(JSON.parse(ajax.responseText));
             } catch (e) {
-              reject(e)
+              reject(e);
             }
-          }
+          };
   
           ajax.onerror = event => {
-            reject(event)
-          }
+            reject(event);
+          };
   
-          let formData = new FormData()
+          ajax.upload.onprogress = (event) => {
+            this.uploadProgress(event, file);
+          };
   
-          formData.append('input-file', file)
+          let formData = new FormData();
+          formData.append('input-file', file);
   
-          ajax.send(formData)
+          ajax.send(formData);
   
-        }))
-      })
+        }));
+      });
   
-      return Promise.all(promises)
+      return Promise.all(promises);
     }
   
+    uploadProgress(event, file) {
+      let loaded = event.loaded;
+      let total = event.total;
+      let porcent = parseInt((loaded / total) * 100);
   
+      this.progressBarEl.style.width = `${porcent}px`;
+    }
   }
+  

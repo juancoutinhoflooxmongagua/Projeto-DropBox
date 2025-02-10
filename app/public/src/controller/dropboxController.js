@@ -59,7 +59,7 @@ class DropBoxController {
       let total = event.total;
       let porcent = parseInt((loaded / total) * 100);
   
-      this.progressBarEl.style.width = `${porcent}px`;
+      this.progressBarEl.style.width = `${porcent}%`;
     }
   }
   

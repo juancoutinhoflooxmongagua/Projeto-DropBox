@@ -1,38 +1,33 @@
-// Import the necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-analytics.js";
-
 class DropBoxController {
   constructor() {
     this.btnSendFileEl = document.querySelector("#btn-send-file");
     this.inputFilesEl = document.querySelector("#files");
     this.snackModalEl = document.querySelector("#react-snackbar-root");
-    this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg');
-    this.nameFileEl = this.snackModalEl.querySelector('.filename');
-    this.timeleftEl = this.snackModalEl.querySelector('.timeleft');
+    this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg')
+    this.nameFileEl = this.snackModalEl.querySelector('.filename')
+    this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
     this.connectFirebase();
 
     this.initEvents();
   }
 
   connectFirebase() {
-    // Your Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDRNtAFdTlpdAM7RK9mjcTu7ADDwJVdORA",
-      authDomain: "dropbox-clone-45510.firebaseapp.com",
-      databaseURL: "https://dropbox-clone-45510-default-rtdb.firebaseio.com",
-      projectId: "dropbox-clone-45510",
-      storageBucket: "dropbox-clone-45510.firebasestorage.app",
-      messagingSenderId: "882468587688",
-      appId: "1:882468587688:web:7a1f82a968991c4cc7da9d",
-      measurementId: "G-DQB4C7HLSF"
+      apiKey: "AIzaSyB5quA1O2m3y4Rplgj1RaumkKhK2nIFrrs",
+      authDomain: "projeto-f50cb.firebaseapp.com",
+      databaseURL: "https://projeto-f50cb-default-rtdb.firebaseio.com",
+      projectId: "projeto-f50cb",
+      storageBucket: "projeto-f50cb.firebasestorage.app",
+      messagingSenderId: "645431665318",
+      appId: "1:645431665318:web:92deab0ae4b1f77d79ca67"
     };
-    
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  }
   
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Now you can access Firebase services like auth, database, etc.
+  }
+
   initEvents() {
     this.btnSendFileEl.addEventListener("click", (event) => {
       this.inputFilesEl.click();

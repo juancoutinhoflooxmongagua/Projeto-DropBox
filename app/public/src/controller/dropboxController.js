@@ -6,9 +6,11 @@ class DropBoxController {
     this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg')
     this.nameFileEl = this.snackModalEl.querySelector('.filename')
     this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
-    this.connectFirebase();
+    this.listFilesEl =  document.querySelector('#list-of-files-and-directories')
 
+    this.connectFirebase();
     this.initEvents();
+    this.readFIles();
   }
 
   connectFirebase() {
@@ -313,11 +315,15 @@ class DropBoxController {
 
   readFIles(){
     this.getFirebaseRef().on('value', snapshot =>{
+      this.listFilesEl.innerHTML = '';
+
       snapshot.forEach(snapshotItem => {
         let key = snapshot.key
         let data = snapshot.val()
 
         console.log(key, data)
+
+        this.listFilesEl.appendChild()
       })
     })
   }

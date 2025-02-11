@@ -26,8 +26,9 @@ class DropBoxController {
   
     firebase.initializeApp(firebaseConfig);
    }
+  
 
-   initEvents() {
+  initEvents() {
     this.btnSendFileEl.addEventListener("click", (event) => {
       this.inputFilesEl.click();
     });

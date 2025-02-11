@@ -14,7 +14,6 @@ class DropBoxController {
   }
 
 
-
   connectFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyB5quA1O2m3y4Rplgj1RaumkKhK2nIFrrs",
@@ -28,9 +27,7 @@ class DropBoxController {
   
     firebase.initializeApp(firebaseConfig);
    }
-  
-
-  initEvents() {
+   initEvents() {
     this.btnSendFileEl.addEventListener("click", (event) => {
       this.inputFilesEl.click();
     });

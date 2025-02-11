@@ -32,7 +32,33 @@ class DropBoxController {
   
     firebase.initializeApp(firebaseConfig);
    }
-   initEvents() {
+
+ getSelection() {
+    return this.listFilesEl.querySelectorAll('.selected');
+  }
+
+  initEvents() {
+
+    this.listFilesEl.addEventListener('selectionchange', e => {
+      
+      switch (this.getSelection().length) {
+        case 0:
+          this.btnDelete.style.display = 'none';
+          this.btnRename.style.display = 'none';
+          break;
+        
+        case 1:
+          this.btnDelete.style.display = 'block';
+          this.btnRename.style.display = 'block';
+          break;
+
+        default:
+          this.btnDelete.style.display = 'block';
+          this.btnRename.style.display = 'none';
+      }
+      
+    })
+
     this.btnSendFileEl.addEventListener("click", (event) => {
       this.inputFilesEl.click();
     });
@@ -338,7 +364,41 @@ class DropBoxController {
 
   initEventsLi(li) {
     li.addEventListener('click', e => {
+
+      if (e.shiftKey) {
+        let firstLi = this.listFilesEl.querySelector('.selected');
+
+        if (firstLi) {
+          let indexStart;
+          let indexEnd;
+          let lis = li.parentElement.childNodes;
+
+          lis.forEach((el, index) => {
+            if (firstLi === el) indexStart = index;
+            if (li === el) indexEnd = index;
+          })
+          
+          let index = [indexStart, indexEnd].sort()
+
+          lis.forEach((el, i) => {
+            if (i >= index[0] && i <= index[1]) {
+              el.classList.add('selected')
+            }
+          })
+
+          this.listFilesEl.dispatchEvent(this.onselectionchange)
+          return true;
+        }
+      }
+
+      if (!e.ctrlKey) {
+        this.listFilesEl.querySelectorAll('li.selected').forEach(el => {
+          el.classList.remove('selected')
+        })
+      }
+
       li.classList.toggle('selected')
+      this.listFilesEl.dispatchEvent(this.onselectionchange)
     })
   }
 

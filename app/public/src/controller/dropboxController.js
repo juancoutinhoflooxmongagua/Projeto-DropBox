@@ -6,11 +6,11 @@ class DropBoxController {
     this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg')
     this.nameFileEl = this.snackModalEl.querySelector('.filename')
     this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
-    this.listFilesEl =  document.querySelector('#list-of-files-and-directories')
+    this.listFilesEl = document.querySelector('#list-of-files-and-directories')
 
     this.connectFirebase();
     this.initEvents();
-    this.readFIles();
+    this.readFiles();
   }
 
   connectFirebase() {
@@ -304,26 +304,28 @@ class DropBoxController {
     }
   }
 
-  getFileView(file) {
-    return `
-      <li>
-        ${this.getFileIconView(file)}
-        <div class="name text-center">${file.name}s</div>
-      </li>
-    `
+  getFileView(file, key) {
+
+    let li = document.createElement('li')
+
+    li.dataset.key = key
+
+    li.innerHTML = `
+      ${this.getFileIconView(file)}
+      <div class="name text-center">${file.name}</div>
+    ` 
+
+    return li;
   }
 
-  readFIles(){
-    this.getFirebaseRef().on('value', snapshot =>{
+  readFiles() {
+    this.getFirebaseRef().on('value', snapshot => {
       this.listFilesEl.innerHTML = '';
-
       snapshot.forEach(snapshotItem => {
-        let key = snapshot.key
-        let data = snapshot.val()
-
-        console.log(key, data)
-
-        this.listFilesEl.appendChild()
+        let key = snapshotItem.key;
+        let data = snapshotItem.val()
+        
+        this.listFilesEl.appendChild(this.getFileView(data, key))
       })
     })
   }

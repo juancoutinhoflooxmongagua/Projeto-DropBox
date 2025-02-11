@@ -13,6 +13,8 @@ class DropBoxController {
     this.readFiles();
   }
 
+
+
   connectFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyB5quA1O2m3y4Rplgj1RaumkKhK2nIFrrs",
@@ -315,6 +317,7 @@ class DropBoxController {
       ${this.getFileIconView(file)}
       <div class="name text-center">${file.name}</div>
     ` 
+    this.initEventsLi(li)
 
     return li;
   }
@@ -328,6 +331,12 @@ class DropBoxController {
         
         this.listFilesEl.appendChild(this.getFileView(data, key))
       })
+    })
+  }
+
+  initEventsLi(li) {
+    li.addEventListener('click', e => {
+      li.classList.toggle('selected')
     })
   }
 

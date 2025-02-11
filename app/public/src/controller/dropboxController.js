@@ -22,25 +22,42 @@ class DropBoxController {
       appId: "1:645431665318:web:92deab0ae4b1f77d79ca67"
     };
   
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+   }
 
-    // Now you can access Firebase services like auth, database, etc.
-  }
-
-  initEvents() {
+   initEvents() {
     this.btnSendFileEl.addEventListener("click", (event) => {
       this.inputFilesEl.click();
     });
 
     this.inputFilesEl.addEventListener("change", (event) => {
-      this.uploadTask(event.target.files);
+      this.btnSendFileEl.disabled = true
+      this.uploadTask(event.target.files).then(responses => {
+        responses.forEach(resp => {
+
+          this.getFirebaseRef().push().set(resp.files['input-file'])
+        })
+
+        this.uploadComplete()
+
+      }).catch(err => {
+        this.uploadComplete()
+        console.error(err)
+      })
 
       this.modalShow();
 
-      this.inputFilesEl.value = "";
-
     });
+  }
+
+  uploadComplete() {
+    this.modalShow(false)
+    this.inputFilesEl.value = "";
+    this.btnSendFileEl.disabled = false
+  }
+
+  getFirebaseRef() {
+    return firebase.database().ref('files')
   }
 
   modalShow(show = true) {
@@ -58,8 +75,6 @@ class DropBoxController {
 
         ajax.onload = event => {
 
-          this.modalShow(false)
-
           try {
             resolve(JSON.parse(ajax.responseText))
           } catch (e) {
@@ -68,7 +83,6 @@ class DropBoxController {
         }
 
         ajax.onerror = event => {
-          this.modalShow(false)
           reject(event)
         }
 
@@ -295,6 +309,17 @@ class DropBoxController {
         <div class="name text-center">${file.name}s</div>
       </li>
     `
+  }
+
+  readFIles(){
+    this.getFirebaseRef().on('value', snapshot =>{
+      snapshot.forEach(snapshotItem => {
+        let key = snapshot.key
+        let data = snapshot.val()
+
+        console.log(key, data)
+      })
+    })
   }
 
 }

@@ -1,5 +1,7 @@
 class DropBoxController {
   constructor() {
+    this.onselectionchange = new Event('selectionchange');
+
     this.btnSendFileEl = document.querySelector("#btn-send-file");
     this.inputFilesEl = document.querySelector("#files");
     this.snackModalEl = document.querySelector("#react-snackbar-root");
@@ -7,12 +9,15 @@ class DropBoxController {
     this.nameFileEl = this.snackModalEl.querySelector('.filename')
     this.timeleftEl = this.snackModalEl.querySelector('.timeleft')
     this.listFilesEl = document.querySelector('#list-of-files-and-directories')
+    
+    this.btnNewFolder = document.querySelector('#btn-new-folder')
+    this.btnRename = document.querySelector('#btn-rename')
+    this.btnDelete = document.querySelector('#btn-delete')
 
     this.connectFirebase();
     this.initEvents();
     this.readFiles();
   }
-
 
   connectFirebase() {
     const firebaseConfig = {

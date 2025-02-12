@@ -38,6 +38,11 @@ class DropBoxController {
   }
 
   initEvents() {
+    this.btnRename.addEventListener('click', e => {
+      let li = this.getSelection()[0]
+
+      let file = li.dataset.file
+    })
 
     this.listFilesEl.addEventListener('selectionchange', e => {
       

@@ -22,7 +22,6 @@ class DropBoxController {
     this.readFiles();
   }
 
-  // Método de conexão com o Firebase
   connectFirebase() {
     const firebaseConfig = {
       apiKey: "AIzaSyB5quA1O2m3y4Rplgj1RaumkKhK2nIFrrs",
@@ -34,7 +33,6 @@ class DropBoxController {
       appId: "1:645431665318:web:9ffc2e4ed87a85a779ca67"
     };
   
-    // Inicializa o Firebase
     firebase.initializeApp(firebaseConfig);
   }
 
@@ -62,7 +60,6 @@ class DropBoxController {
   }
 
   initEvents() {
-
     this.btnNewFolder.addEventListener('click', e => {
       let name = prompt('Nome da nova pasta:');
 

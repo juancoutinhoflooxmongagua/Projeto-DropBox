@@ -1,30 +1,24 @@
 class DropBoxController {
   constructor() {
-    // Aparentemente, você quer um evento personalizado para seleção de arquivos ou ações
-    this.onselectionchange = new CustomEvent('selectionchange', {
-      detail: { message: 'Mudança na seleção de arquivos!' }
-    });
 
-    // Seleção dos elementos da interface
+    this.currentFolder = ['hcode'];
+
+    this.onselectionchange = new Event("selectionchange");
+
     this.btnSendFileEl = document.querySelector("#btn-send-file");
     this.inputFilesEl = document.querySelector("#files");
     this.snackModalEl = document.querySelector("#react-snackbar-root");
-    this.progressBarEl = this.snackModalEl.querySelector('.mc-progress-bar-fg');
-    this.nameFileEl = this.snackModalEl.querySelector('.filename');
-    this.timeleftEl = this.snackModalEl.querySelector('.timeleft');
-    this.listFilesEl = document.querySelector('#list-of-files-and-directories');
-    
-    this.btnNewFolder = document.querySelector('#btn-new-folder');
-    this.btnRename = document.querySelector('#btn-rename');
-    this.btnDelete = document.querySelector('#btn-delete');
+    this.progressBarEl = this.snackModalEl.querySelector(".mc-progress-bar-fg");
+    this.nameFileEl = this.snackModalEl.querySelector(".filename");
+    this.timeleftEl = this.snackModalEl.querySelector(".timeleft");
+    this.listFilesEl = document.querySelector("#list-of-files-and-directories");
 
-    // Conectar ao Firebase
+    this.btnNewFolder = document.querySelector("#btn-new-folder");
+    this.btnRename = document.querySelector("#btn-rename");
+    this.btnDelete = document.querySelector("#btn-delete");
+
     this.connectFirebase();
-    
-    // Inicializar eventos
     this.initEvents();
-
-    // Carregar arquivos inicialmente
     this.readFiles();
   }
 

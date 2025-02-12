@@ -35,16 +35,16 @@ class DropBoxController {
       authDomain: "projeto-f50cb.firebaseapp.com",
       databaseURL: "https://projeto-f50cb-default-rtdb.firebaseio.com",
       projectId: "projeto-f50cb",
-      storageBucket: "projeto-f50cb.appspot.com", // Corrigido para a URL do bucket
+      storageBucket: "projeto-f50cb.firebasestorage.app",
       messagingSenderId: "645431665318",
-      appId: "1:645431665318:web:92deab0ae4b1f77d79ca67"
+      appId: "1:645431665318:web:9ffc2e4ed87a85a779ca67"
     };
   
     // Inicializa o Firebase
     firebase.initializeApp(firebaseConfig);
   }
 
-   getSelection() {
+  getSelection() {
     return this.listFilesEl.querySelectorAll(".selected");
   }
 
@@ -68,6 +68,19 @@ class DropBoxController {
   }
 
   initEvents() {
+
+    this.btnNewFolder.addEventListener('click', e => {
+      let name = prompt('Nome da nova pasta:');
+
+      if (name) {
+        this.getFirebaseRef().push().set({
+          name, 
+          type: 'folder',
+          path: this.currentFolder.join('/')
+        })
+      }
+    })
+
     this.btnDelete.addEventListener("click", (e) => {
       this.removeTask()
         .then((responses) => {
